@@ -976,4 +976,51 @@ cubes = (k**3 for k in range(1,11))
 # Object Oriented Programming in Python
 
 
+#---------decorators------------------------------------------
+from time import sleep,time
+
+# def f():
+#     sleep(0.3)
+
+# def g():
+#     sleep(0.5)
+
+# t = time() # start timer
+# f()  # wait for 0.3 seconds
+# print("f took : %r"%(time() - t)) # current time - start time
+
+# t = time() # start timer
+# g() # wait for 0.5 seconds
+
+# print("g took : %r"%(time() - t))
+
+# Now, lets use decorator to implement above code ->>
+
+# def measure(func): # takes function as argument
+#     t = time()
+#     func()
+#     print(func.__name__,"took:",time()-t)
+
+# measure(f)
+# measure(g)
+
+# Another way--->
+
+def custom_f(sleep_time=0.1):
+    sleep(sleep_time)
+
+def measure(func,*args, **kwargs):
+    t = time() # start_time
+    func(*args, **kwargs)
+    print(func.__name__,"took:",time()-t) # current_time[aka time()] - start_time[aka t]
+
+# measure(custom_f,sleep_time = 3)
+# measure(custom_f,2)
+
+import math as m
+
+def fact(n):
+    return m.factorial(n)
+
+# measure(fact,2147422)  # fact took: 29.568504571914673
 
