@@ -971,5 +971,4 @@ cubes = (k**3 for k in range(1,11))
 # print(list(cubes)) # this will exhaust the generator
 # print(list(cubes)) # nothing more to give
 
-#--------------------------------------------------------------------------
-
+#-------------------------------------------------------------------------
