@@ -1006,21 +1006,102 @@ from time import sleep,time
 
 # Another way--->
 
-def custom_f(sleep_time=0.1):
-    sleep(sleep_time)
+# def custom_f(sleep_time=0.1):
+#     sleep(sleep_time)
 
-def measure(func,*args, **kwargs):
-    t = time() # start_time
-    func(*args, **kwargs)
-    print(func.__name__,"took:",time()-t) # current_time[aka time()] - start_time[aka t]
+# def measure(func,*args, **kwargs):
+#     t = time() # start_time
+#     func(*args, **kwargs)
+#     print(func.__name__,"took:",time()-t) # current_time[aka time()] - start_time[aka t]
 
 # measure(custom_f,sleep_time = 3)
 # measure(custom_f,2)
 
-import math as m
+# import math as m
 
-def fact(n):
-    return m.factorial(n)
+# def fact(n):
+#     return m.factorial(n)
 
 # measure(fact,2147422)  # fact took: 29.568504571914673
+
+# ONE MORE WAY!!!!
+
+# from time import sleep, time
+
+# def f(sleep_time=0.1):
+#     sleep(sleep_time)
+    
+# def measure(func):
+#     def wrapper(*args, **kwargs):
+#         t = time()
+#         func(*args, **kwargs)
+#         print(func.__name__, "took:", time() - t)
+    # return wrapper
+
+# f = measure(f)  # decoration point
+# f(0.2)  # f took: 0.20128178596496582
+# f(sleep_time=0.3)  # f took: 0.30509519577026367
+# print(f.__name__)  # wrapper  <- ouch!
+
+
+# One decorator 
+# wht follows is pseudocode (don't try to run it):-->
+
+"""
+def func(arg1, arg2, ...):
+    pass
+func = decorator(func)
+
+---- is equivalent to the following:---
+
+@decorator
+def func(arg1, arg2, ...):
+    pass
+
+"""
+
+# multiple decorators-->
+
+"""
+def func(arg1, arg2, ...):
+    pass
+func = deco1(deco2(func))
+
+# is equivalent to the following:
+@deco1
+@deco2
+def func(arg1, arg2, ...):
+    pass
+
+
+When applying multiple decorators, it is important to pay attention to the order. In the preceding example, func()
+is decorated with deco2() first, and the result is decorated with deco1(). A good rule of thumb is the closer the
+decorator is to the function, the sooner it is applied.
+
+"""
+
+
+# lets fix the previous function where it printed wrapper instead
+# of the function name
+
+# from time import sleep, time
+# from functools import wraps
+
+# def measure(func):
+#     @wraps(func)
+#     def wrapper(*args, **kwargs):
+#         t = time()
+#         func(*args, **kwargs)
+#         print(func.__name__, "took:", time() - t)
+#     return wrapper
+
+# @measure
+# def f(sleep_time=0.1):
+#     """I'm a cat. I love to sleep!"""
+#     sleep(sleep_time)
+# f(sleep_time=0.3)  # f took: 0.30042004585266113
+# print(f.__name__)  # f
+# print(f.__doc__ )  # I'm a cat. I love to sleep!
+
+
 
