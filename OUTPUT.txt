@@ -1,0 +1,76 @@
+D:\Learn_Python_Hard_Way_practice>python
+Python 3.12.8 (tags/v3.12.8:2dc476b, Dec  3 2024, 19:30:04) [MSC v.1942 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import Hello_world
+>>> line = "I am 195 cm tall"
+>>> words = Hello_world.break_words(line)
+>>> words
+['I', 'am', '195', 'cm', 'tall']
+>>> sorted_words = Hello_world.sort_words(words)
+>>> sorted_words
+['195', 'I', 'am', 'cm', 'tall']
+>>> Hello_world.print_first_word(words)
+I
+>>> Hello_world.print_last_word(words)
+tall
+>>> Hello_world.print_first_and_last(line)
+I
+tall
+>>> Hello_world_print_first_and_last_sorted(line)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'Hello_world_print_first_and_last_sorted' is not defined
+>>> Hello_world.print_first_and_last_sorted(line)
+195
+tall
+>>> help(Hello_world)
+Help on module Hello_world:
+
+NAME
+    Hello_world - # Comments start with a pound, hash or octothorpe------------------------------------------------------------
+
+FUNCTIONS
+    add(a, b)
+
+    break_words(stuff)
+        This function will break up words for us.
+
+    cheese_and_crackers(cheese_count, boxes_of_crackers)
+
+    divide(a, b)
+
+    fun()
+
+    multiply(a, b)
+
+    print_first_and_last(sentence)
+        Prints the first and last words of the sentence.
+
+    print_first_and_last_sorted(sentence)
+        Sorts the words then prints the first and last one.
+
+    print_first_word(words)
+        Prints the first word after popping it off.
+
+    print_last_word(words)
+        Prints the last word after popping it off.
+
+    print_two(*args)
+
+    remainder(a, b)
+
+    sort_sentence(sentence)
+        Takes in a full sentence and returns the sorted words.
+
+    sort_words(words)
+        Sorts the words.
+
+    subtract(a, b)
+
+    switch(a, b)
+        # Test to confirm if values can be switched by call by value method of passing variables
+        # a = 3
+        # b = 2
+
+FILE
+    d:\learn_python_hard_way_practice\hello_world.py
