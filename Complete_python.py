@@ -1104,4 +1104,149 @@ decorator is to the function, the sooner it is applied.
 # print(f.__doc__ )  # I'm a cat. I love to sleep!
 
 
+#-----------------------------------------------------------------------------
+# Python OOP---------------------------------------
+
+class Person:
+    species = "Human"   # Any name defined in the body of a class
+                        # becomes an attribute that belongs to that class
+
+# print(Person.species)
+# Person.alive = True  # added dynamically
+# print(Person.alive)
+
+# man = Person() # creating an object
+# man.name = 'John'       #  The man instance also has two attributes that belong to its own namespace 
+# man.surname = 'Doe'     #  and are therefore called instance attributes: name and surname.
+# print(man.name,man.surname)   
+
+
+#----What happens if class and object have same attributes ??
+
+# Instance attrib overshadow class attributes----
+# this is similar to local variables being preferred over global if both have the same name
+class Coordinate:
+    x,y = 1,2
+
+A = Coordinate()
+# print(A.x)  # 1 (from class attrib)
+# print(A.y)  # 2 (from class attrib)
+# A.x = 12    # A gets its own 'x' attrib
+# A.y = 24    # A gets its own 'y' attrib
+# print((A.x,A.y))   # prints (12, 24) 
+
+A.z = 23 # A is a 3-d point now !
+# print(A.z) 
+
+# print(Coordinate.z) # z is an instance attrib  
+                    # specific to A
+# AttributeError: type object 'Coordinate' has no attribute 'z'
+
+# class Square:
+#     side = 8
+#     def area(self):  #  # self is a reference to an instance
+#         return self.side**2
+
+# sq = Square()
+
+# print(sq.area())
+# print(Square.area(sq)) # 64(side is found on class)
+# sq.side = 10
+# print(sq.area())  # 100 (side is found on the instance)
+
+"""
+
+# From within a class method, we can refer to an instance by means of a special argument, called self by convention
+
+Either you pass the instance to the method call ( Square.area(sq) ), which
+within the method will take the name self, or you can use a more comfortable syntax, sq.area(), and Python will
+translate that for you behind the scenes.
+
+"""
+# class Price:
+#     def final_price(self,vat,discount=0):
+#         """Returns price after applying vat and fixed discount"""  # docstring
+#         return (self.net_price * (100 + vat) / 100) - discount
+
+# p1 = Price()
+# p1.net_price = 100 # instance attribute
+# print(Price.final_price(p1,20,10)) # 110 
+# # we pass the instance to self, 20 to vat and 10 to discount
+
+# print(p1.final_price(20,10)) # self = p1 behind the scenes
+#                             # and self.net_price yields 100
+
+
+# Instead of assigning net_price to p1, we can ->
+
+class Rectangle:
+    def __init__(self,side_a:float,side_b:float) -> float:
+        self.side_a = side_a
+        self.side_b = side_b
+        
+    def area(self):
+        return self.side_a * self.side_b
+
+# r1 = Rectangle(12,5)
+# print(r1.side_a,r1.side_b,r1.area())
+
+# Rectangle.__init__(r1,side_a=12,side_b=5) # Initializing manually using class 
+# print(Rectangle.area(r1)) # passing object to method 
+
+# r2 = Rectangle(13,7)
+# print(r2.area(),r2.side_a,r2.side_b)
+
+"""
+Inheritance means that two objects are related by means of an Is-A type of relationship. On the other hand,
+composition means that two objects are related by means of a Has-A relationship
+"""
+
+class Engine:
+    def start(self):
+        pass
+    def stop(self):
+        pass
+
+class ElectricEngine(Engine): # Is-A Engine
+    pass
+
+class V8Engine(Engine):  # Is-A Engine
+    pass
+
+class Car:
+    engine_cls = Engine
+    def __init__(self):
+        self.engine = self.engine_cls()
+    def start(self):
+        print(
+            f"Starting {self.engine.__class__.__name__} for",
+            f"{self.__class__.__name__}...Wroom"
+        )
+    def stop(self):
+        self.engine.stop()
+
+class RaceCar(Car): # Is-a car 
+    engine_cls = V8Engine	
+
+class CityCar(Car): # Is-a car  
+    engine_cls = ElectricEngine
+
+class F1Car(Car): # Is-a car 
+    pass
+
+car = Car()
+racecar = RaceCar()
+citycar = CityCar()
+f1car = F1Car()
+
+cars = [car,racecar,citycar,f1car]
+
+for car in cars:
+    car.start()
+
+"""
+When we define class A(B): pass, we say A is the child of B, and B is the parent of A. The parent and base
+classes are synonyms, and so are child of and derived from. Also, we say that a class inherits from another class, or
+that it extends it
+"""
 
