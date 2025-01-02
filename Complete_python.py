@@ -1250,3 +1250,68 @@ classes are synonyms, and so are child of and derived from. Also, we say that a 
 that it extends it
 """
 
+# isinstance() method Returns True/False based on whether 
+# an object is an instance of a class or of a subclass thereof
+
+# print("car is an instance of Car: " ,isinstance(car,Car))
+# print("f1car is a car: ",isinstance(f1car,Car))
+# print("racecar is a F1Car: ",isinstance(racecar,F1Car))
+
+
+car_classes = [Car, RaceCar, F1Car]
+
+# for class1 in car_classes:
+#     for class2 in car_classes:
+#         is_subclass = issubclass(class1, class2)
+#         msg = "{0} a subclass of".format(
+#         "is" if is_subclass else "is not"
+#         )
+#         print(class1.__name__, msg, class2.__name__)
+
+"""
+Also, if you want to use a name in your code that clashes with a Python-reserved keyword 
+or a built-in function or class, the
+convention is to add a trailing underscore to the name. 
+
+Please remember that, if you do not
+specify a base class, brackets are optional 
+and in practice are never used.
+Therefore, writing class A: pass or class A(): pass 
+or class A(object): pass are all equivalent. 
+The object class is a special class in that 
+it hosts the methods that are common 
+to all Python classes, and it does not
+allow you to set any attributes on it.
+
+
+"""
+class A(object):
+    pass
+
+class A:
+    pass
+
+class A():
+    pass 
+
+# are all equivalent
+
+
+# Let us see how we can access a base class from within a class---->
+
+class Book:
+    def __init__(self, title, publisher, pages):
+        self.title = title
+        self.publisher = publisher
+        self.pages = pages
+class Ebook(Book):
+    def __init__(self, title, publisher, pages, format_):
+        Book.__init__(self, title, publisher, pages)
+        self.format_ = format_
+ebook = Ebook(
+    "Learn Python Programming", "Packt Publishing", 500, "PDF"
+)
+print(ebook.title)  # Learn Python Programming
+print(ebook.publisher)  # Packt Publishing
+print(ebook.pages)  # 500
+print(ebook.format_)  # PDF
