@@ -1299,19 +1299,163 @@ class A():
 
 # Let us see how we can access a base class from within a class---->
 
-class Book:
-    def __init__(self, title, publisher, pages):
-        self.title = title
-        self.publisher = publisher
-        self.pages = pages
-class Ebook(Book):
-    def __init__(self, title, publisher, pages, format_):
-        Book.__init__(self, title, publisher, pages)
-        self.format_ = format_
-ebook = Ebook(
-    "Learn Python Programming", "Packt Publishing", 500, "PDF"
-)
-print(ebook.title)  # Learn Python Programming
-print(ebook.publisher)  # Packt Publishing
-print(ebook.pages)  # 500
-print(ebook.format_)  # PDF
+# class Book:
+#     def __init__(self, title, publisher, pages):
+#         self.title = title
+#         self.publisher = publisher
+#         self.pages = pages
+# class Ebook(Book):
+#     def __init__(self, title, publisher, pages, format_):
+#         Book.__init__(self, title, publisher, pages)
+#         self.format_ = format_
+        
+# ebook = Ebook("Learn Python Programming", "Packt Publishing", 500, "PDF")
+# print(ebook.title)  # Learn Python Programming
+# print(ebook.publisher)  # Packt Publishing
+# print(ebook.pages)  # 500
+# print(ebook.format_)  # PDF
+
+"""
+In this example, we tell Python to call the __init__()
+method of the Book class; we feed self to that call, making sure that we bind it to the present instance.
+If we modify the logic within the __init__() method of Book, we do not need to touch Ebook; the change will
+transfer automatically.
+"""
+
+# Instead of the above approach , we can use super() method to call the 
+# parent class's init method
+# class Book:
+#     def __init__(self, title, publisher, pages):
+#         self.title = title
+#         self.publisher = publisher
+#         self.pages = pages
+# class Ebook(Book):
+#     def __init__(self, title, publisher, pages, format_):
+#         super().__init__(title,publisher,pages)
+#         # Another way to do the same thing is:
+#         # super(Ebook, self).__init__(title, publisher, pages)
+#         self.format_ = format_
+# ebook = Ebook(
+#     "Learn Python Programming", "Packt Publishing", 500, "PDF"
+# )
+
+# print(ebook.title)  # Learn Python Programming
+# print(ebook.publisher)  # Packt Publishing
+# print(ebook.pages)  # 500
+# print(ebook.format_)  # PDF
+
+# Method Resolution Order(MRO)-------------------------------------------------
+
+#  Python provides a way to always know the order in which classes are 
+#  searched on attribute lookup: the method resolution order (MRO).
+
+"""
+we know that when we ask for someobject.attribute and attribute is not found on that object,
+Python starts searching in the class that someobject was created from. If it is not there either, Python searches up
+the inheritance chain until either attribute is found or the object class is reached.
+
+"""
+
+class A:
+    label = "a"
+class B(A):
+    label = "b"
+class C(A):
+    label = "c"
+class D(B,C):
+    pass
+
+d = D()
+print(d.label) # hypothetically, could be 'b' or 'c'
+# but it prints 'b'
+#  since B is the leftmost among the base classes of D aka (B,C)
+# if it was (C,B) then C would be printed
+
+print(d.__class__.mro())
+
+# lookup order : D -> B -> C -> A -> object
+
+#===============================================================================
+
+# CLASS AND STATIC METHODS======>
+
+#  When you create a class object, Python assigns a name to it. That name acts as a namespace, and sometimes it
+#  makes sense to group functionalities under it.  Static methods are perfect for this use case.
+# . Unlike instance methods, they do not need to be passed an instance when called.
+class RDR:
+    @staticmethod
+    def print_protag():
+        print("John Marston")
+        
+    @staticmethod
+    def print_allies():
+        print("Marshal")
+        print("Bonnie McFarlane")
+        print("West Nigel Dickens")
+    
+    @staticmethod
+    def print_enemies():
+        print("Bill Williamson")
+
+
+# RDR.print_allies()
+# RDR.print_enemies()
+# RDR.print_protag()
+
+
+class MathUtil:
+    @staticmethod
+    def factorial_(n):
+        if n != 0 and n != 1:
+            return n * MathUtil.factorial_(n-1)
+        else:
+            return 1
+    
+    @staticmethod
+    def sum_of_numbers_till_n(n):
+        return (n * (n + 1)) / 2
+
+    @staticmethod
+    def sum_of_squares_of_n_num(n):
+        return (n*(n+1)*(2*n+1))/6
+    
+    @staticmethod
+    def sum_of_cubes_till_n(n):
+        return ((n * (n + 1)) / 2)**2
+    
+
+# print(MathUtil.sum_of_cubes_till_n(3))
+# print(MathUtil.factorial_(10))
+# print(MathUtil.sum_of_numbers_till_n(10))
+# print(MathUtil.sum_of_squares_of_n_num(10))
+
+
+#----CLASS Methods---->
+
+"""
+Class methods are slightly different from static methods in that, like instance methods, they also receive a special
+first argument. In their case, it is the class object itself, rather than the instance. A very common use case for class
+methods is to provide factory capability to a class, which means to have alternative ways to create instances of the
+class.
+"""
+
+class Point:
+    def __init__(self,x,y):
+        self.x = x
+        self.y = y
+    @classmethod
+    def from_tuple(cls,coords):   # cls is Point
+        return cls(*coords)
+    
+    @classmethod
+    def from_point(cls,point):   # cls is Point
+        return cls(point.x,point.y)
+    
+p = Point.from_tuple((3,7))
+print(p.x,p.y) # 3 7
+
+q = Point.from_point(p)
+print(q.x,q.y) # 3 7
+
+# Within each class method, the cls argument refers to the Point class. As with the instance method, which takes
+#  self as the first argument, the class method takes a cls argument. 
