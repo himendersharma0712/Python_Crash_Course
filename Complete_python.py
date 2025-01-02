@@ -1452,10 +1452,10 @@ class Point:
         return cls(point.x,point.y)
     
 p = Point.from_tuple((3,7))
-print(p.x,p.y) # 3 7
+# print(p.x,p.y) # 3 7
 
-q = Point.from_point(p)
-print(q.x,q.y) # 3 7
+# q = Point.from_point(p)
+# print(q.x,q.y) # 3 7
 
 # Within each class method, the cls argument refers to the Point class. As with the instance method, which takes
 #  self as the first argument, the class method takes a cls argument. 
